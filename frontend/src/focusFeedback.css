@@ -1,0 +1,57 @@
+/* Focus decoration belongs to each control's existing shape. Keep geometry,
+   selection colours and hover effects intact; never draw an extra outer box. */
+:root :focus-visible {
+  outline: none !important;
+}
+:root .tree-leaf input:focus-visible + .leaf-face,
+:root .scope-choice input:focus-visible + span {
+  outline: none !important;
+}
+
+/* Mouse and scripted focus remain visually quiet. Tab users can still locate
+   controls through their existing edges or a short underline on text controls. */
+:root[data-keyboard-focus] :is(button, input, select, textarea, summary):focus-visible {
+  border-color: #90a9c7;
+}
+:root[data-keyboard-focus] :is(button, a, summary):focus-visible {
+  text-decoration-line: underline;
+  text-decoration-color: #a7bdd8;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .24em;
+}
+:root[data-keyboard-focus] .tree-base:focus-visible {
+  text-decoration: none;
+}
+:root[data-keyboard-focus] .tree-base:focus-visible :is(.base-top, .base-side) {
+  stroke: #91aecf;
+  stroke-width: 1.5;
+}
+:root[data-keyboard-focus] .tree-base:focus-visible .base-ring {
+  opacity: .7;
+}
+:root[data-keyboard-focus] .tree-leaf input:focus-visible + .leaf-face,
+:root[data-keyboard-focus] .tree-subgroup:focus-visible .leaf-face {
+  border-color: #a7bdd8;
+}
+:root[data-keyboard-focus] label:has(input:focus-visible),
+:root[data-keyboard-focus] .scope-choice input:focus-visible + span {
+  text-decoration: underline;
+  text-underline-offset: .24em;
+  text-decoration-color: #cdbd8c;
+}
+:root[data-keyboard-focus] .space-track:focus-visible i {
+  background: #d2e2f6;
+}
+
+/* Windows High Contrast needs an unambiguous fallback. */
+@media (forced-colors: active) {
+  :root[data-keyboard-focus] :focus-visible {
+    outline: 2px solid Highlight !important;
+    outline-offset: 3px;
+  }
+  :root[data-keyboard-focus] .tree-leaf input:focus-visible + .leaf-face,
+  :root[data-keyboard-focus] .scope-choice input:focus-visible + span {
+    outline: 2px solid Highlight !important;
+    outline-offset: -2px;
+  }
+}

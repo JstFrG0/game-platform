@@ -1,0 +1,6 @@
+{
+  "enabled": true,
+  "repository": "JstFrG0/game-release-data",
+  "interval_seconds": 21600,
+  "credential": "auto"
+}

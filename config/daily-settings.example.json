@@ -1,0 +1,12 @@
+{
+  "years": [
+    2026
+  ],
+  "ign_review_years": [
+    2026
+  ],
+  "release_retention_count": 31,
+  "repository": "JstFrG0/game-release-data",
+  "ign_root": "F:\\Projects\\game-platform\\collectors\\ign",
+  "proxy": "http://127.0.0.1:7897"
+}
