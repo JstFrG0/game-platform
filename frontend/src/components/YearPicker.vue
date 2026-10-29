@@ -1,4 +1,5 @@
 <script setup>
+import { filterMotion } from '../filterMotion.js';
 import { computed, inject, nextTick, onBeforeUnmount, ref, watch } from "vue";
 import { filterSpaceKey, layoutPoint } from "../filterSpace.js";
 import { playSphereBurst } from "../sphereBurst.js";
@@ -29,7 +30,7 @@ const index = computed(() => wrap(Math.round(position.value), years.value.length
 const draft = computed(() => years.value[index.value]);
 let drag = null, suppressClickUntil = 0, rotationFrame = 0;
 const visualPosition = ref(0);
-const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const motion = filterMotion;
 const entering = ref(false), introTime = ref(2480), introFlight = ref(null);
 const exiting = ref(false), exitTime = ref(0), exitFlight = ref(null);
 const stars = ref([]), starMask = ref('none');

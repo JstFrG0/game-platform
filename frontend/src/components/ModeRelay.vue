@@ -1,4 +1,5 @@
 <script setup>
+import { filterMotion } from '../filterMotion.js';
 import {computed,inject,nextTick,onBeforeUnmount,ref,watch} from 'vue';
 import {filterSpaceKey,layoutPoint} from '../filterSpace.js';
 import {advanceRelay} from '../modeRelay.js';
@@ -7,7 +8,7 @@ import {modeTransitFrame} from '../modeTransit.js';
 import {drawModeScan,clearEffect} from '../genreModeEffects.js';
 const props=defineProps({modes:Array,selected:Array,active:Boolean,disabled:Boolean,initial:Boolean});
 const emit=defineEmits(['choose']),space=inject(filterSpaceKey,null),stage=ref(null),canvas=ref(null),paused=ref(false),unavailable=ref(false),entrance=ref(1);
-const motion=window.matchMedia('(prefers-reduced-motion: reduce)'),reduced=ref(motion.matches),marks=new Map(),weights=new Map();
+const motion=filterMotion,reduced=ref(motion.matches),marks=new Map(),weights=new Map();
 const scanCanvas=ref(null),scan=computed(()=>reduced.value?0:space?modeTransitFrame(space.state.progress,0,{x:0,y:0},{x:0,y:0}).scan:0);
 let observer,dirty=true,previous=null,time=0,localFrame=0;
 const left=computed(()=>props.modes.slice(0,Math.ceil(props.modes.length/2))),right=computed(()=>props.modes.slice(Math.ceil(props.modes.length/2)));

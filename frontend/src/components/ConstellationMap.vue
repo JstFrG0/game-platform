@@ -1,4 +1,5 @@
 <script setup>
+import { filterMotion } from '../filterMotion.js';
 import {computed,inject,nextTick,onBeforeUnmount,ref,watch} from 'vue';
 import {filterSpaceKey,layoutPoint} from '../filterSpace.js';
 import {constellationNodes,constellationBurst,constellationDrift,constellationSparks} from '../genreConstellations.js';
@@ -8,7 +9,7 @@ import {startConstellationSignal,constellationSignalFrame,advanceConstellationSi
 import {genreGatherPhase,readGatherRoutes,drawGather,clearEffect} from '../genreModeEffects.js';
 const props=defineProps({genres:Array,selected:Array,query:String,active:Boolean,disabled:Boolean,initial:Boolean});
 const emit=defineEmits(['choose']),space=inject(filterSpaceKey),viewport=ref(null),view=ref({x:0,y:0,zoom:1}),dragging=ref(false),entrance=ref(1);
-const motion=window.matchMedia('(prefers-reduced-motion: reduce)'),sky={x:0,y:0};
+const motion=filterMotion,sky={x:0,y:0};
 const reduced=ref(motion.matches);
 const paused=ref(false),hidden=ref(document.hidden);
 const bounds=ref({width:0,height:0});

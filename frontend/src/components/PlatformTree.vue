@@ -1,4 +1,5 @@
 <script setup>
+import { filterMotion } from '../filterMotion.js';
 import { computed, inject, nextTick, onBeforeUnmount, ref, useId, watch } from 'vue';
 import { filterSpaceKey, layoutPoint } from '../filterSpace.js';
 import PlatformMark from './PlatformMark.vue';
@@ -13,7 +14,7 @@ const emit = defineEmits(['choose']);
 const viewport = ref(null), branches = ref([]), growing = ref(new Set()), drag = ref(null);
 const view = ref({ x: 400, y: 300, zoom: 1 }), preview = ref(null), announce = ref('');
 const otherOpen = ref(''), otherPage = ref(0), panning = ref(false);
-const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const motion = filterMotion;
 const space=inject(filterSpaceKey,null),reduced=ref(motion.matches),apertureId=`platform-aperture-${useId()}`;
 const exitFrame=computed(()=>platformExitPhases(space?.state.progress??1,branches.value.length>0));
 const energyRoutes=computed(()=>platformEnergyRoutes(branches.value,otherCluster.value,otherAnchor.value));

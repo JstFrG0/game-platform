@@ -1,6 +1,7 @@
 <script setup>
 import BrandMark from "./components/BrandMark.vue";
 import DataUpdateControl from "./components/DataUpdateControl.vue";
+import AppSettings from "./components/AppSettings.vue";
 </script>
 
 <template>
@@ -11,7 +12,7 @@ import DataUpdateControl from "./components/DataUpdateControl.vue";
         <BrandMark />
         <span>游戏资料库</span>
       </RouterLink>
-      <DataUpdateControl />
+      <div class="header-actions"><DataUpdateControl /><AppSettings /></div>
     </div>
   </header>
   <main id="main" tabindex="-1"><RouterView /></main>

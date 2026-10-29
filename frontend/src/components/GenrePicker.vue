@@ -1,4 +1,5 @@
 <script setup>
+import { filterMotion } from '../filterMotion.js';
 import { computed, inject, nextTick, onBeforeUnmount, ref } from 'vue';
 import { genreIds } from '../catalog.js';
 import { filterSpaceKey } from '../filterSpace.js';
@@ -14,7 +15,7 @@ const tree = ref(null), names = new Map();
 const emit = defineEmits(['update:modelValue', 'change']);
 const dialog = ref(null), trigger = ref(null), summary = ref(null), transfer = ref(null), searchInput = ref(null);
 const opened = ref(false), closing = ref(false), draft = ref([]), query = ref(''), flight = ref(null);
-const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const motion = filterMotion;
 let stopDissolve = () => {};
 let animation = null, sequence = 0, overflow, session = 0;
 function describe(genre){return {...genre,id:Number(genre.id),name:genre.name||`类型 ${genre.id}`,short:genreLabel(genre)};}

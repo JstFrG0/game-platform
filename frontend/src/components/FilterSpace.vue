@@ -1,4 +1,5 @@
 <script setup>
+import { filterMotion } from '../filterMotion.js';
 import { computed, inject, nextTick, onBeforeUnmount, ref, shallowRef, useId, watch } from 'vue';
 import { drawPlatformStardust, platformDustStrength } from '../platformStardust.js';
 import { CORE_CONTACT, descentFrame, landingParticles, smooth } from '../filterDescent.js';
@@ -25,7 +26,7 @@ let measureTags=true;
 let navigation = null;
 const stars = shallowRef([]), skyPan = ref({ x: 0, y: 0 });
 let skyField = null, skyStarted = 0, previousPan = { x: 0, y: 0 };
-const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const motion = filterMotion;
 let frame = 0, target = 0, previous = 0, startedClosing = 0, closingDuration = 1200, session = 0, overflow;
 const descent = computed(() => descentFrame(state.progress, viewport.value.height, anchors.value.year, anchors.value.platform));
 const genreTransfer = computed(() => genreTransitFrame(state.progress,viewport.value.height,anchors.value.platform,anchors.value.genre,platformOptions.value));
@@ -165,7 +166,7 @@ function prepare() {
 }
 function navigate(value, direct = false) {
   if (!state.opened || state.closing || state.initializing || sceneBusy.value) return;
-  const next = clampProgress(value);
+  const next = motion.matches ? Math.round(clampProgress(value)) : clampProgress(value);
   if (next===target && !navigation) return;
   state.transitionLeg=transitLeg(state.transitionLeg,Math.min(1,state.progress),Math.min(1,next));
   if (!intermediate.value) prepare();
@@ -210,7 +211,8 @@ watch(() => state.progress, value => {
   });
 }, {flush:'post'});
 function sliderKey(event) {
-  const change = { ArrowDown: .1, ArrowRight: .1, ArrowUp: -.1, ArrowLeft: -.1 };
+  const step = motion.matches ? 1 : .1;
+  const change = { ArrowDown: step, ArrowRight: step, ArrowUp: -step, ArrowLeft: -step };
   if (Object.hasOwn(change,event.key)) { event.preventDefault(); event.stopPropagation(); navigate(target+change[event.key]); }
   else if (event.key==='Home' || event.key==='End') { event.preventDefault(); navigate(event.key==='Home' ? 0 : sceneKinds.length-1,true); }
 }
